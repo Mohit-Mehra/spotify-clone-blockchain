@@ -12,13 +12,20 @@ const { web3 } = anchor
 const { SystemProgram } = web3
 const utf8 = anchor.utils.bytes.utf8
 
+const styles = {
+  main: `w-screen h-screen bg-white text-black flex flex-col justify-center items-center`,
+  button: `bg-[#22C55E] m-3 text-white font-bold py-4 px-7 rounded-full hover:opacity-70 transition`,
+  text: `text-4xl text-black mb-10`,
+  buttons: `flex items-center`,
+}
 const defaultAccounts = {
   tokenProgram: TOKEN_PROGRAM_ID,
   clock: anchor.web3.SYSVAR_CLOCK_PUBKEY,
   systemProgram: SystemProgram.programId,
 }
 
-export const Payment = () => {
+
+const Payment = () => {
   const wallet = useWallet()
   const connection = new anchor.web3.Connection(SOLANA_HOST)
   const program = getProgramInstance(connection, wallet)
@@ -55,7 +62,7 @@ export const Payment = () => {
           accounts: {
             payerWallet: payerSigner,
             receiver: new PublicKey(
-              'CftLeerf3Fa4wf2UtE8NmfHH7LGKe9p8oRk6YJCEtwp5',
+              'F4gFn7FZU9ag3GURoC12bsYMo9WkWnbsiaPaxKcB5paU',
             ),
             authority: wallet.publicKey,
             ...defaultAccounts,
@@ -69,9 +76,7 @@ export const Payment = () => {
   }
 
   /** show homepage if user makes payment */
-//   if (isPaid) return <HomePage />
-
-  /** Payment Component */
+  if (isPaid) return <HomePage />
   return (
     <div className={styles.main}>
       <p className={styles.text}>Make payment</p>
@@ -91,9 +96,4 @@ export const Payment = () => {
   )
 }
 
-const styles = {
-  main: `w-screen h-screen bg-white text-black flex flex-col justify-center items-center`,
-  button: `bg-[#22C55E] m-3 text-white font-bold py-4 px-7 rounded-full hover:opacity-70 transition`,
-  text: `text-4xl text-black mb-10`,
-  buttons: `flex items-center`,
-}
+export default Payment
